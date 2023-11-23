@@ -18,17 +18,17 @@ function createCard(data, deleteCallback) {
   
     cardTitle.textContent = data.name;
     cardImage.src = data.link;
+    cardImage.alt = data.name;
   
     const deleteButton = card.querySelector('.card__delete-button');
     deleteButton.addEventListener('click', function() {
-      deleteCallback(data); 
-      card.remove(); 
+      deleteCallback(card); 
     });
     return card;
   }
   
-  function deleteCard(data) {
-    console.log('Удаление карточки:', data);
+  function deleteCard(cardElement) {
+    cardElement.remove();
   }
   
   function renderInitialCards() {
