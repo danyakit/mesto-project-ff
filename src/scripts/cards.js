@@ -25,9 +25,9 @@ export const initialCards = [
     }
 ];
 
-import {addModalWindow, editModalWindow} from './modal';
+import { handleImageClick } from './index.js';
 
-export function createCard(data, deleteCallback, likeButton) {
+export function createCard(data, deleteCard, likeButton) {
   const template = document.getElementById('card-template');
   const clone = document.importNode(template.content, true);
   const card = clone.querySelector('.card');
@@ -40,16 +40,14 @@ export function createCard(data, deleteCallback, likeButton) {
   cardImage.alt = data.name;
 
   const deleteButton = card.querySelector('.card__delete-button');
-  deleteButton.addEventListener('click', function() {
-    deleteCallback(card); 
+  deleteButton.addEventListener('click', function () {
+    deleteCard(card);
   });
 
-  likeButton(card);
-  const addButton = document.querySelector('.profile__add-button');
-  addButton.addEventListener('click', addModalWindow);
+  const likeButtonElement = card.querySelector('.card__like-button');
+  likeButtonElement.addEventListener('click', likeButton);
 
-  const editButton = document.querySelector('.profile__edit-button');
-  editButton.addEventListener('click', editModalWindow);
+  cardImage.addEventListener('click', handleImageClick);
 
   return card;
 }
@@ -58,8 +56,6 @@ export function deleteCard(cardElement) {
   cardElement.remove();
 }
 
-export function likeButton(card) {
-  card.querySelector('.card__like-button').addEventListener('click', function() {
-    this.classList.toggle('card__like-button_is-active');
-  });
+export function likeButton(evt) {
+  evt.target.classList.toggle('card__like-button_is-active');
 }
