@@ -1,26 +1,34 @@
-import {initialCards, createCard, likeButton, deleteCard} from './cards';
-import { addModalWindow, editModalWindow, openImagePopup, handleCardFormSubmit, handleProfileFormSubmit, placesList} from './modal.js';
+import {initialCards, createCard, likeCard, deleteCard, handleImageClick} from './cards';
+import { openAddCardModalWindow, openProfileModalWindow, openImagePopup, handleCardFormSubmit, handleProfileFormSubmit, placesList, profileForm, newCardForm, closeButtonImagePopup, closeButtonNewCardPopup, closeButtonProfilePopup, closePopup, сardPopup, profilePopup, imagePopup} from './modal.js';
 import '../pages/index.css';
 
+
+profileForm.addEventListener('submit', handleProfileFormSubmit);
+newCardForm.addEventListener('submit', handleCardFormSubmit);
+
 const addButton = document.querySelector('.profile__add-button');
-addButton.addEventListener('click', addModalWindow);
+addButton.addEventListener('click', openAddCardModalWindow);
 
 const editButton = document.querySelector('.profile__edit-button');
-editButton.addEventListener('click', editModalWindow);
+editButton.addEventListener('click', openProfileModalWindow);
+
+closeButtonNewCardPopup.addEventListener('click', function() {
+  closePopup(сardPopup);
+});
+closeButtonProfilePopup.addEventListener('click', function() {
+  closePopup(profilePopup);
+});
+closeButtonImagePopup.addEventListener('click', function() {
+  closePopup(imagePopup);
+});
 
 
-  export function handleImageClick(event) {
-    const target = event.target;
-    if (target.classList.contains("card__image")) {
-      const imageLink = target.src;
-      const imageName = target.alt;
-      openImagePopup(imageLink, imageName);
-    }
-  }
+  profileForm.addEventListener('submit', handleProfileFormSubmit);
+  newCardForm.addEventListener('submit', handleCardFormSubmit);
 
   function renderInitialCards() {
     initialCards.forEach(function(cardData) {
-      const card = createCard(cardData, deleteCard, likeButton, addModalWindow, editModalWindow, openImagePopup, handleCardFormSubmit, handleProfileFormSubmit);
+    const card = createCard(cardData, deleteCard, likeCard, handleImageClick);
       placesList.appendChild(card);
     });
   }

@@ -1,45 +1,37 @@
-import { createCard, deleteCard, likeButton } from './cards.js';
+import { createCard, deleteCard, likeCard } from './cards.js';
 
 export const placesList = document.querySelector('.places__list');
-const formElement = document.querySelector('.popup__form'); // форма и профиля и новой карточки
+export const profileForm = document.querySelector('.popup_type_edit .popup__form');
+export const newCardForm = document.querySelector('.popup_type_new-card .popup__form');
+
 const nameInputNewCard = document.querySelector('.popup__input_type_name');
 const jobInputNewCard = document.querySelector('.popup__input_type_description');
 const nameCard = document.querySelector('.popup__input_type_card-name');
 const linkOnImage = document.querySelector('.popup__input_type_url');
-const сardPopup = document.querySelector('.popup_type_new-card');
-const profilePopup = document.querySelector('.popup_type_edit');
-const newCardForm = document.querySelector('.popup_type_new-card .popup__form');
-const imagePopup = document.querySelector(".popup_type_image");
-const closeButtonNewCardPopup = сardPopup.querySelector('.popup__close');
-const closeButtonProfilePopup = profilePopup.querySelector('.popup__close');
-const closeButtonImagePopup = imagePopup.querySelector('.popup__close');
+export const сardPopup = document.querySelector('.popup_type_new-card');
+export const profilePopup = document.querySelector('.popup_type_edit');
+export const imagePopup = document.querySelector(".popup_type_image");
+export const closeButtonNewCardPopup = сardPopup.querySelector('.popup__close');
+export const closeButtonProfilePopup = profilePopup.querySelector('.popup__close');
+export const closeButtonImagePopup = imagePopup.querySelector('.popup__close');
 
-const profileForm = document.querySelector('.popup_type_edit .popup__form');
 const imageElement = imagePopup.querySelector(".popup__image");
 const captionElement = imagePopup.querySelector(".popup__caption");
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 
-document.querySelector('.popup_type_edit .popup__form').addEventListener('submit', handleProfileFormSubmit);
-document.querySelector('.popup_type_new-card .popup__form').addEventListener('submit', handleCardFormSubmit);
 
 
-export function addModalWindow() {
+
+export function openAddCardModalWindow() {
   openPopup(сardPopup);
-  closeButtonNewCardPopup.addEventListener('click', function() {
-    closePopup(сardPopup);
-  });
 }
 
-export function editModalWindow() {
+export function openProfileModalWindow() {
   openPopup(profilePopup);
 
   nameInputNewCard.value = profileTitle.textContent;
   jobInputNewCard.value = profileDescription.textContent;
-
-  closeButtonProfilePopup.addEventListener('click', function() {
-    closePopup(profilePopup);
-  });
 }
 
 export function openImagePopup(imageLink, imageName) {
@@ -47,9 +39,6 @@ export function openImagePopup(imageLink, imageName) {
   imageElement.alt = imageName;
   captionElement.textContent = imageName;
   openPopup(imagePopup);
-  closeButtonImagePopup.addEventListener('click', function () {
-    closePopup(imagePopup);
-  });
 }
 
   function handleOverlayClick(event) {
@@ -70,19 +59,18 @@ export function openImagePopup(imageLink, imageName) {
   }
 
   export function openPopup(popup) {
-    popup.classList.add('popup_is-opened', 'popup_is-animated');
+    popup.classList.add('popup_is-animated');
+    setTimeout(() => {
+      popup.classList.add("popup_is-opened");
+    }, 1);
     popup.addEventListener('click', handleOverlayClick);
     document.addEventListener('keydown', handleEscape);
-  
-    if (popup.classList.contains('popup_type_edit')) {
-      profileForm.addEventListener('submit', handleProfileFormSubmit);
-    } else if (popup.classList.contains('popup_type_new-card')) {
-      newCardForm.addEventListener('submit', handleCardFormSubmit);
-    }
   }
 
-  function closePopup(popup) {
+  export function closePopup(popup) {
     popup.classList.remove('popup_is-opened');
+    popup.removeEventListener('click', handleOverlayClick);
+    document.removeEventListener('keydown', handleEscape);
   }
 
   export function handleProfileFormSubmit(evt) {
@@ -106,7 +94,7 @@ export function openImagePopup(imageLink, imageName) {
       link: linkCard
     };
 
-    const newCard = createCard(newCardData, deleteCard, likeButton);
+    const newCard = createCard(newCardData, deleteCard, likeCard);
     placesList.prepend(newCard);
     closePopup(сardPopup);
     newCardForm.reset();
