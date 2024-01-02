@@ -1,4 +1,4 @@
-import { createCard, deleteCard, likeCard } from './cards.js';
+import { createCard, deleteCard, likeCard, handleImageClick } from './cards.js';
 
 export const placesList = document.querySelector('.places__list');
 export const profileForm = document.querySelector('.popup_type_edit .popup__form');
@@ -94,7 +94,7 @@ export function openImagePopup(imageLink, imageName) {
       link: linkCard
     };
 
-    const newCard = createCard(newCardData, deleteCard, likeCard);
+    const newCard = createCard(newCardData, deleteCard, likeCard, handleImageClick);
     placesList.prepend(newCard);
     closePopup(сardPopup);
     newCardForm.reset();

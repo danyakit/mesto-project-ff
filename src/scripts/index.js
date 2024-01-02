@@ -12,16 +12,11 @@ addButton.addEventListener('click', openAddCardModalWindow);
 const editButton = document.querySelector('.profile__edit-button');
 editButton.addEventListener('click', openProfileModalWindow);
 
-closeButtonNewCardPopup.addEventListener('click', function() {
-  closePopup(сardPopup);
+const closeButtons = document.querySelectorAll('.popup__close');
+closeButtons.forEach((button) => {
+  const popup = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(popup));
 });
-closeButtonProfilePopup.addEventListener('click', function() {
-  closePopup(profilePopup);
-});
-closeButtonImagePopup.addEventListener('click', function() {
-  closePopup(imagePopup);
-});
-
 
   profileForm.addEventListener('submit', handleProfileFormSubmit);
   newCardForm.addEventListener('submit', handleCardFormSubmit);
