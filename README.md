@@ -1,2 +1,6 @@
 # Проектная работа Mesto
-https://github.com/danyakit/mesto-project-ff.git
+* разработана валидация всех форм;
+* подключен интерфейс к API;
+* опубликован сайт на сервере.
+
+https://danyakit.github.io/mesto-project-ff/
