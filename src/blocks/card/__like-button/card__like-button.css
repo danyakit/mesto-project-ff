@@ -15,6 +15,12 @@
   transition: 0.3s;
 }
 
+.card__like-count {
+  width: 10px;
+  height: 13px;
+  margin-top: 3px;
+}
+
 .card__like-button:hover {
   opacity: 0.6;
 }
