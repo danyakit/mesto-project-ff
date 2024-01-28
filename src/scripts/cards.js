@@ -1,38 +1,12 @@
-import { openImagePopup } from "./modal.js";
 import { likeCardApi, unlikeCard, deleteCardApi } from "./api.js";
+import { openPopup } from "./modal.js";
 
-export const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
 
 export function createCard(
   data,
   deleteCard,
   likeCard,
-  handleImageClick,
+  openImagePopup,
   isOwner
 ) {
   const template = document.getElementById("card-template");
@@ -63,7 +37,7 @@ export function createCard(
     likeCard(evt, likeCountElement, data._id);
   });
   cardImage.addEventListener("click", function () {
-    handleImageClick(data.link, data.name);
+    openImagePopup(data.link, data.name);
   });
   return card;
 }
@@ -102,8 +76,4 @@ export function likeCard(evt, likeCountElement, cardId) {
 function updateLikeStatus(likeButton, likeCountElement, likeCount) {
   likeButton.classList.toggle("card__like-button_is-active");
   likeCountElement.textContent = likeCount;
-}
-
-export function handleImageClick(imageLink, imageName) {
-  openImagePopup(imageLink, imageName);
 }

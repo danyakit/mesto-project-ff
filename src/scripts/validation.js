@@ -1,4 +1,5 @@
 
+
 function showInputError(formElement, inputElement, errorMessage) {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
@@ -6,6 +7,7 @@ function showInputError(formElement, inputElement, errorMessage) {
     errorElement.textContent = errorMessage;
     errorElement.classList.add('popup__input-error_active');
 }
+
 
 function hideInputError(formElement, inputElement) {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -79,5 +81,3 @@ export function clearValidation(formElement) {
 
     toggleButtonState(inputList, buttonElement);
 }
-
-

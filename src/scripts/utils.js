@@ -1,5 +1,7 @@
-import { openPopup, сardPopup, profilePopup, avatarEditImage, nameInputNewCard, jobInputNewCard, inputList, buttonElement, profileTitle, profileDescription, profileForm, newCardForm } from "./modal.js";
+import { openPopup } from "./modal.js";
 import { toggleButtonState, clearValidation } from "./validation.js";
+import {profilePopup, avatarEditImage, nameInputNewCard, jobInputNewCard, inputList, buttonElement, profileTitle, profileDescription, profileForm, newCardForm, сardPopup} from "./index.js";
+
 export function openAddCardModalWindow() {
     openPopup(сardPopup);
     clearValidation(newCardForm);
