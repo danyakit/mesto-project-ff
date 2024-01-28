@@ -7,43 +7,24 @@ export const profileForm = document.querySelector(".popup_type_edit .popup__form
 export const newCardForm = document.querySelector(".popup_type_new-card .popup__form");
 export const avatarForm = document.querySelector(".edit__avatar .popup__form");
 
-const nameInputNewCard = document.querySelector(".popup__input_type_name");
-const jobInputNewCard = document.querySelector(".popup__input_type_description");
+export const nameInputNewCard = document.querySelector(".popup__input_type_name");
+export const jobInputNewCard = document.querySelector(".popup__input_type_description");
 const nameCard = document.querySelector(".popup__input_type_card-name");
 const linkOnImage = document.querySelector(".popup__input_type_url");
 const linkOnAvatar = document.querySelector(".popup__input_type_url-avatar");
 export const сardPopup = document.querySelector(".popup_type_new-card");
 export const profilePopup = document.querySelector(".popup_type_edit");
 export const imagePopup = document.querySelector(".popup_type_image");
-export const closeButtonNewCardPopup = сardPopup.querySelector(".popup__close");
-export const closeButtonProfilePopup =
-  profilePopup.querySelector(".popup__close");
-export const closeButtonImagePopup = imagePopup.querySelector(".popup__close");
 
 const imageElement = imagePopup.querySelector(".popup__image");
 const captionElement = imagePopup.querySelector(".popup__caption");
-const profileTitle = document.querySelector(".profile__title");
-const profileDescription = document.querySelector(".profile__description");
-const editAvatarImage = document.querySelector(".edit__avatar");
+export const profileTitle = document.querySelector(".profile__title");
+export const profileDescription = document.querySelector(".profile__description");
+export const avatarEditImage = document.querySelector(".edit__avatar");
+export const inputList = Array.from(profileForm.querySelectorAll(".popup__input"));
+export const buttonElement = profileForm.querySelector(".popup__button");
+const profileImage = document.querySelector('.profile__image');
 
-export function openAddCardModalWindow() {
-  openPopup(сardPopup);
-}
-
-export function openEditAvatarWindow() {
-  openPopup(editAvatarImage);
-}
-
-export function openProfileModalWindow() {
-  openPopup(profilePopup);
-
-  nameInputNewCard.value = profileTitle.textContent;
-  jobInputNewCard.value = profileDescription.textContent;
-
-  const inputList = Array.from(profileForm.querySelectorAll(".popup__input"));
-  const buttonElement = profileForm.querySelector(".popup__button");
-  toggleButtonState(inputList, buttonElement);
-}
 
 export function openImagePopup(imageLink, imageName) {
   imageElement.src = imageLink;
@@ -88,8 +69,6 @@ export function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   const nameInputValue = nameInputNewCard.value;
   const jobInputValue = jobInputNewCard.value;
-
-  const buttonElement = profileForm.querySelector(".popup__button");
   buttonElement.textContent = "Сохранение...";
 
   updateProfile({ name: nameInputValue, about: jobInputValue })
@@ -116,7 +95,6 @@ export function handleCardFormSubmit(evt) {
     link: linkCard,
   };
 
-  const buttonElement = newCardForm.querySelector(".popup__button");
   buttonElement.textContent = "Сохранение...";
   addNewCard(newCardData)
     .then((newCard) => {
@@ -133,7 +111,6 @@ export function handleCardFormSubmit(evt) {
       const inputList = Array.from(
         newCardForm.querySelectorAll(".popup__input")
       );
-      const buttonElement = newCardForm.querySelector(".popup__button");
       toggleButtonState(inputList, buttonElement);
     })
     .catch((error) => {
@@ -148,23 +125,16 @@ export function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
   const avatarUrl = linkOnAvatar.value;
 
-  const buttonElement = avatarForm.querySelector(".popup__button");
   buttonElement.textContent = "Сохранение...";
 
   updateAvatar(avatarUrl)
     .then((data) => {
-      // Обработка успешного ответа
       console.log('Аватар успешно обновлен:', data);
-
-      // Обновление DOM с новым аватаром
-      const profileImage = document.querySelector('.profile__image');
       profileImage.style.backgroundImage = `url(${avatarUrl})`;
-
-      closePopup(editAvatarImage);
+      closePopup(avatarEditImage);
       avatarForm.reset();
     })
     .catch((error) => {
-      // Обработка ошибок
       console.error('Ошибка при обновлении аватара:', error);
     })
     .finally(() => {

@@ -62,7 +62,9 @@ export function createCard(
   likeButtonElement.addEventListener("click", function (evt) {
     likeCard(evt, likeCountElement, data._id);
   });
-  cardImage.addEventListener("click", handleImageClick);
+  cardImage.addEventListener("click", function () {
+    handleImageClick(data.link, data.name);
+  });
   return card;
 }
 
@@ -102,11 +104,6 @@ function updateLikeStatus(likeButton, likeCountElement, likeCount) {
   likeCountElement.textContent = likeCount;
 }
 
-export function handleImageClick(event) {
-  const target = event.target;
-  if (target.classList.contains("card__image")) {
-    const imageLink = target.src;
-    const imageName = target.alt;
-    openImagePopup(imageLink, imageName);
-  }
+export function handleImageClick(imageLink, imageName) {
+  openImagePopup(imageLink, imageName);
 }

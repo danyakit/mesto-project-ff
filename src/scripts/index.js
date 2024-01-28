@@ -1,8 +1,5 @@
 import { createCard, likeCard, deleteCard, handleImageClick } from "./cards.js";
 import {
-  openAddCardModalWindow,
-  openProfileModalWindow,
-  openEditAvatarWindow,
   handleCardFormSubmit,
   handleProfileFormSubmit,
   placesList,
@@ -15,6 +12,14 @@ import {
 import "../pages/index.css";
 import { enableValidation, clearValidation } from "./validation.js";
 import { getInitialCards, getUserInfo } from "./api.js";
+import { 
+  openAddCardModalWindow,
+  openProfileModalWindow,
+  openEditAvatarWindow } from "./utils.js"
+
+const profileTitle = document.querySelector('.profile__title');
+const profileDescription = document.querySelector('.profile__description');
+const profileImage = document.querySelector('.profile__image');
 
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 newCardForm.addEventListener("submit", handleCardFormSubmit);
@@ -46,54 +51,36 @@ enableValidation({
 
 clearValidation(profileForm, newCardForm, avatarForm);
 
-
-// После загрузки страницы
 document.addEventListener('DOMContentLoaded', () => {
-  // Получаем данные профиля
-  getUserInfo()
-    .then((userInfo) => {
-      // Вставляем данные профиля в DOM
+  Promise.all([getUserInfo(), getInitialCards()])
+    .then(([userInfo, cards]) => {
       updateProfileInfo(userInfo);
-    })
-    .catch((error) => {
-      console.error('Ошибка при получении данных профиля:', error);
-    });
-
-  // Получаем карточки
-  getInitialCards()
-    .then((cards) => {
-      // Отрисовываем карточки
       renderInitialCards(cards);
     })
     .catch((error) => {
-      console.error('Ошибка при получении карточек:', error);
+      console.error('Ошибка при получении данных:', error);
     });
 });
 
-// Функция для отрисовки карточек
 function renderInitialCards(cards) {
-  cards.forEach((cardData) => {
-    const card = createCard(
-      cardData,
-      deleteCard,
-      likeCard,
-      handleImageClick,
-      false
-    );
-    placesList.appendChild(card);
-  });
+  if (Array.isArray(cards)) {
+    cards.forEach((cardData) => {
+      const card = createCard(
+        cardData,
+        deleteCard,
+        likeCard,
+        handleImageClick,
+        false
+      );
+      placesList.appendChild(card);
+    });
+  }
 }
 
-// Функция для вставки данных профиля в DOM
 function updateProfileInfo(userInfo) {
-  const profileTitle = document.querySelector('.profile__title');
-  const profileDescription = document.querySelector('.profile__description');
-  const profileImage = document.querySelector('.profile__image');
-
   profileTitle.textContent = userInfo.name;
   profileDescription.textContent = userInfo.about;
   profileImage.style.backgroundImage = `url(${userInfo.avatar})`;
 }
-
 
 renderInitialCards();
